@@ -5,13 +5,13 @@
 
 <mapper namespace="com.ohgiraffers.remix.TravelMapper">
 
-    <resultMap id="travelResultMap" type="com.ohgiraffers.remix.TravelMapper">
-        <id property="travelCode" column="TRAVEL_CODE"/>
+    <resultMap id="travelResultMap" type="com.ohgiraffers.remix.TravelDTO">
+        <id property="code" column="TRAVEL_CODE"/>
         <result property="continentCode" column="CONTINENT_CODE"/>
-        <result property="travelCountry" column="TRAVEL_COUNTRY"/>
-        <result property="travelLoca" column="TRAVEL_LOCA"/>
-        <result property="travelDay" column="TRAVEL_DAY"/>
-        <result property="travelBudget" column="TRAVEL_BUDGET"/>
+        <result property="country" column="TRAVEL_COUNTRY"/>
+        <result property="location" column="TRAVEL_LOCA"/>
+        <result property="day" column="TRAVEL_DAY"/>
+        <result property="budget" column="TRAVEL_BUDGET"/>
         <result property="registStatus" column="REGIST_STATUS"/>
     </resultMap>
 
@@ -28,5 +28,99 @@
          WHERE REGIST_STATUS = 'Y'
          ORDER BY TRAVEL_CODE
     </select>
+
+    <select id="selectByBudget" resultMap="travelResultMap" parameterType="hashmap">
+        SELECT
+               TRAVEL_CODE
+             , CONTINENT_CODE
+             , TRAVEL_COUNTRY
+             , TRAVEL_LOCA
+             , TRAVEL_DAY
+             , TRAVEL_BUDGET
+             , REGIST_STATUS
+          FROM TB_TRAVEL
+         WHERE REGIST_STATUS = 'Y'
+        <if test="budget gte 0 and budget lte 500000">
+            AND TRAVEL_BUDGET BETWEEN 0 AND #{ budget }
+        </if>
+        <if test="budget gte 500000 and budget lte 1000000">
+            AND TRAVEL_BUDGET BETWEEN 500000 AND #{ budget }
+        </if>
+        <if test="budget gte 1000000 and budget lte 2000000">
+            AND TRAVEL_BUDGET BETWEEN 1000000 AND #{ budget }
+        </if>
+        <if test="budget gte 2000000 and budget lte 3000000">
+            AND TRAVEL_BUDGET BETWEEN 2000000 AND #{ budget }
+        </if>
+        <if test="budget gt 3000000">
+            AND TRAVEL_BUDGET BETWEEN 3000000 AND #{ budget }
+        </if>
+        ORDER BY TRAVEL_CODE
+    </select>
+
+    <select id="searchTravel" resultMap="travelResultMap" parameterType="com.ohgiraffers.remix.SearchCriteria">
+        SELECT
+               TRAVEL_CODE
+             , CONTINENT_CODE
+             , TRAVEL_COUNTRY
+             , TRAVEL_LOCA
+             , TRAVEL_DAY
+             , TRAVEL_BUDGET
+             , REGIST_STATUS
+          FROM TB_TRAVEL
+        <if test="condition == '대륙'">
+            JOIN TB_CONTINENT USING(CONTINENT_CODE)
+        </if>
+         WHERE REGIST_STATUS = 'Y'
+        <if test="condition == '대륙'">
+            AND CONTINENT_NAME = #{ value }
+        </if>
+        <if test="condition == '나라이름'">
+            AND TRAVEL_COUNTRY = #{ value }
+        </if>
+         ORDER BY TRAVEL_CODE
+    </select>
+
+    <insert id="insertTravel" parameterType="com.ohgiraffers.remix.TravelDTO">
+        INSERT
+          INTO TB_TRAVEL
+        (
+          TRAVEL_CODE
+        , CONTINENT_CODE
+        , TRAVEL_COUNTRY
+        , TRAVEL_LOCA
+        , TRAVEL_DAY
+        , TRAVEL_BUDGET
+        , REGIST_STATUS
+        )
+        VALUES
+        (
+          SEQ_TRAVEL_CODE.NEXTVAL
+        , #{ continentCode }
+        , #{ country }
+        , #{ location }
+        , #{ day }
+        , #{ budget }
+        , #{ registStatus }
+        )
+    </insert>
+
+    <update id="updateTravel" parameterType="com.ohgiraffers.remix.TravelDTO">
+        UPDATE
+               TB_TRAVEL
+           SET CONTINENT_CODE = #{ continentCode }
+             , TRAVEL_COUNTRY = #{ country }
+             , TRAVEL_LOCA = #{ location }
+             , TRAVEL_DAY = #{ day }
+             , TRAVEL_BUDGET = #{ budget }
+             , REGIST_STATUS = #{ registStatus}
+         WHERE TRAVEL_CODE = #{ code }
+    </update>
+
+    <delete id="deleteTravel" parameterType="_int">
+        DELETE
+          FROM TB_TRAVEL
+         WHERE TRAVEL_CODE = #{ code }
+    </delete>
 
 </mapper>

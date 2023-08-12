@@ -12,8 +12,8 @@ public class Template {
 
     private static String DRIVER = "oracle.jdbc.driver.OracleDriver";
     private static String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-    private static String USER = "C##OHGIRAFFERS";
-    private static String PASSWORD = "OHGIRAFFERS";
+    private static String USER = "C##TRAVEL";
+    private static String PASSWORD = "TRAVEL";
 
     /* SqlSessionFactory는 애플리케이션이 실행되는 동안 존재해야하며,
     * 여러 차례 다시 빌드하지 않는 것이 가장 좋은 형태이다.

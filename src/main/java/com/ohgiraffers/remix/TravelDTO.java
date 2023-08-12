@@ -1,21 +1,25 @@
 package com.ohgiraffers.remix;
 
 public class TravelDTO {
-    private int code;
-    private int day;
-    private String country;
-    private String loca;
-    private int continentCode;
+  private int code;
+  private int day;
+  private String country;
+  private String location;
+  private int continentCode;
+  private int budget;
+  private String registStatus;
 
     public TravelDTO() {
     }
 
-    public TravelDTO(int code, int day, String country, String loca, int continentCode) {
+    public TravelDTO(int code, int day, String country, String location, int continentCode, int budget, String registStatus) {
         this.code = code;
         this.day = day;
         this.country = country;
-        this.loca = loca;
+        this.location = location;
         this.continentCode = continentCode;
+        this.budget = budget;
+        this.registStatus = registStatus;
     }
 
     public int getCode() {
@@ -42,12 +46,12 @@ public class TravelDTO {
         this.country = country;
     }
 
-    public String getLoca() {
-        return loca;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLoca(String loca) {
-        this.loca = loca;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getContinentCode() {
@@ -58,14 +62,32 @@ public class TravelDTO {
         this.continentCode = continentCode;
     }
 
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public String getRegistStatus() {
+        return registStatus;
+    }
+
+    public void setRegistStatus(String registStatus) {
+        this.registStatus = registStatus;
+    }
+
     @Override
     public String toString() {
         return "TravelDTO{" +
                 "code=" + code +
                 ", day=" + day +
                 ", country='" + country + '\'' +
-                ", loca='" + loca + '\'' +
+                ", location='" + location + '\'' +
                 ", continentCode=" + continentCode +
+                ", budget=" + budget +
+                ", registStatus='" + registStatus + '\'' +
                 '}';
     }
 }
