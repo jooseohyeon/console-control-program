@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ohgiraffers.remix.TravelMapper">
+
+    <resultMap id="travelResultMap" type="com.ohgiraffers.remix.TravelMapper">
+        <id property="travelCode" column="TRAVEL_CODE"/>
+        <result property="continentCode" column="CONTINENT_CODE"/>
+        <result property="travelCountry" column="TRAVEL_COUNTRY"/>
+        <result property="travelLoca" column="TRAVEL_LOCA"/>
+        <result property="travelDay" column="TRAVEL_DAY"/>
+        <result property="travelBudget" column="TRAVEL_BUDGET"/>
+        <result property="registStatus" column="REGIST_STATUS"/>
+    </resultMap>
+
+    <select id="selectAllTravel" resultMap="travelResultMap">
+        SELECT
+               TRAVEL_CODE
+             , CONTINENT_CODE
+             , TRAVEL_COUNTRY
+             , TRAVEL_LOCA
+             , TRAVEL_DAY
+             , TRAVEL_BUDGET
+             , REGIST_STATUS
+          FROM TB_TRAVEL
+         WHERE REGIST_STATUS = 'Y'
+         ORDER BY TRAVEL_CODE
+    </select>
+
+</mapper>
