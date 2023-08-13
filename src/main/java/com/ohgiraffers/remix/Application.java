@@ -1,8 +1,6 @@
 package com.ohgiraffers.remix;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
 //    Application -> controller -> service -> mapper -> xml
@@ -11,35 +9,47 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         TravelController travelController = new TravelController();
 
-        do{
+        do {
             System.out.println("=============== 여행 관리 ===============");
             System.out.println("1. 여행 전체 조회");
             System.out.println("2. 검색으로 여행 목록 조회");
             System.out.println("3. 새로운 여행 추가");
             System.out.println("4. 여행 수정");
             System.out.println("5. 여행 삭제");
+            System.out.println("6. 랜덤으로 여행 5개 조회하기");
             System.out.println("9. 종료하기");
             System.out.print("메뉴를 선택하세요 : ");
             int no = sc.nextInt();
 
-            switch (no){
-                case 1 : travelController.selectAllMenu(); break;
-                case 2 : ifSubMenu(); break;
-                case 3 : travelController.registTravel(inputTravel()); break;
-                case 4 : travelController.modifyTravel(inputModifyTravel()); break;
-                case 5 : travelController.deleteTravel(inputTravelCode()); break;
-                case 9 :
-                    System.out.println("프로그램을 종료합니다."); return;
+            switch (no) {
+                case 1:
+                    travelController.selectAllMenu();
+                    break;
+                case 2:
+                    ifSubMenu();
+                    break;
+                case 3:
+                    travelController.registTravel(inputTravel());
+                    break;
+                case 4:
+                    travelController.modifyTravel(inputModifyTravel());
+                    break;
+                case 5:
+                    travelController.deleteTravel(inputTravelCode());
+                    break;
+                case 9:
+                    System.out.println("프로그램을 종료합니다.");
+                    return;
             }
 
-        }while(true);
+        } while (true);
     }
 
     private static void ifSubMenu() {
         Scanner sc = new Scanner(System.in);
         TravelService travelService = new TravelService();
 
-        do{
+        do {
             System.out.println("=========== 검색으로 여행 목록 조회 ==========");
             System.out.println("1. 원하는 예산에 맞춰 여행 추천받기");
             System.out.println("2. 대륙 혹은 나라이름으로 여행 검색하기");
@@ -47,12 +57,17 @@ public class Application {
             System.out.print("메뉴 번호를 입력하세요 : ");
             int no = sc.nextInt();
 
-            switch (no){
-                case 1 : travelService.selectByBudget(inputBudget()); break;
-                case 2 : travelService.searchTravel(inputSearchCriteria()); break;
-                case 9 : return;
+            switch (no) {
+                case 1:
+                    travelService.selectByBudget(inputBudget());
+                    break;
+                case 2:
+                    travelService.searchTravel(inputSearchCriteria());
+                    break;
+                case 9:
+                    return;
             }
-        }while (true);
+        } while (true);
     }
 
     private static int inputBudget() {
@@ -89,7 +104,7 @@ public class Application {
         System.out.print("여행한 일 수를 입력하세요 : ");
         String day = sc.nextLine();
         System.out.print("여행에 든 예산을 입력해주세요 : ");
-        String  budget = sc.nextLine();
+        String budget = sc.nextLine();
         System.out.print("여행을 공개하시겠습니까? (Y/N) : ");
         String registStatus = sc.nextLine();
 
@@ -119,7 +134,7 @@ public class Application {
         System.out.print("수정할 일 수를 입력하세요 : ");
         String day = sc.nextLine();
         System.out.print("수정할 예산을 입력해주세요 : ");
-        String  budget = sc.nextLine();
+        String budget = sc.nextLine();
         System.out.print("여행을 공개하시겠습니까? (Y/N) : ");
         String registStatus = sc.nextLine();
 
@@ -142,8 +157,9 @@ public class Application {
         String code = sc.nextLine();
 
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("code" , code);
+        parameter.put("code", code);
 
         return parameter;
     }
 }
+

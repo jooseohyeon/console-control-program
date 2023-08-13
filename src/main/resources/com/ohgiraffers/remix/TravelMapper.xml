@@ -40,21 +40,23 @@
              , REGIST_STATUS
           FROM TB_TRAVEL
          WHERE REGIST_STATUS = 'Y'
-        <if test="budget gte 0 and budget lte 500000">
-            AND TRAVEL_BUDGET BETWEEN 0 AND #{ budget }
-        </if>
-        <if test="budget gte 500000 and budget lte 1000000">
-            AND TRAVEL_BUDGET BETWEEN 500000 AND #{ budget }
-        </if>
-        <if test="budget gte 1000000 and budget lte 2000000">
-            AND TRAVEL_BUDGET BETWEEN 1000000 AND #{ budget }
-        </if>
-        <if test="budget gte 2000000 and budget lte 3000000">
-            AND TRAVEL_BUDGET BETWEEN 2000000 AND #{ budget }
-        </if>
-        <if test="budget gt 3000000">
-            AND TRAVEL_BUDGET BETWEEN 3000000 AND #{ budget }
-        </if>
+        <choose>
+            <when test="budget gte 0 and budget lte 500000">
+                AND TRAVEL_BUDGET BETWEEN 0 AND #{ budget }
+            </when>
+            <when test="budget gte 500000 and budget lte 1000000">
+                AND TRAVEL_BUDGET BETWEEN 500000 AND #{ budget }
+            </when>
+            <when test="budget gte 1000000 and budget lte 2000000">
+                AND TRAVEL_BUDGET BETWEEN 1000000 AND #{ budget }
+            </when>
+            <when test="budget gte 2000000 and budget lte 3000000">
+                AND TRAVEL_BUDGET BETWEEN 2000000 AND #{ budget }
+            </when>
+            <otherwise>
+                AND TRAVEL_BUDGET BETWEEN 3000000 AND #{ budget }
+            </otherwise>
+        </choose>
         ORDER BY TRAVEL_CODE
     </select>
 
